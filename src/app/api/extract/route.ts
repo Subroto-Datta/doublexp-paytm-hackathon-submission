@@ -58,7 +58,7 @@ Transcript: ${transcript}`;
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "sarvam-2b",
+      model: "sarvam-30b",
       messages: [
         {
           role: "system",
@@ -76,7 +76,7 @@ Transcript: ${transcript}`;
   if (!llmResponse.ok) {
     const errorText = await llmResponse.text();
     console.error("[Sarvam LLM Error]", llmResponse.status, errorText);
-    throw new Error(`Sarvam LLM failed: ${llmResponse.status}`);
+    throw new Error(`Sarvam LLM failed: ${llmResponse.status} — ${errorText}`);
   }
 
   const llmData = (await llmResponse.json()) as {
@@ -84,7 +84,7 @@ Transcript: ${transcript}`;
   };
   let content = llmData.choices[0]?.message?.content || "{}";
 
-  // Strip markdown code fences
+  // Strip markdown code fences if the model wraps the JSON anyway
   content = content
     .replace(/^```json\n?/, "")
     .replace(/\n?```$/, "")
@@ -125,9 +125,10 @@ export async function POST(req: NextRequest) {
 
       const sttFormData = new FormData();
       sttFormData.append("file", audio);
-      sttFormData.append("model", "saaras:v2");
+      sttFormData.append("model", "saaras:v3");
       sttFormData.append("language_code", "hi-IN");
-      sttFormData.append("with_timestamps", "false");
+
+      console.log("[STT] Sending audio to Sarvam, size:", audio.size, "bytes, type:", audio.type);
 
       const sttResponse = await fetch("https://api.sarvam.ai/speech-to-text", {
         method: "POST",
@@ -140,19 +141,25 @@ export async function POST(req: NextRequest) {
       if (!sttResponse.ok) {
         const errorText = await sttResponse.text();
         console.error("[Sarvam STT Error]", sttResponse.status, errorText);
-        throw new Error(`Sarvam STT failed: ${sttResponse.status}`);
+        throw new Error(`Sarvam STT failed: ${sttResponse.status} — ${errorText}`);
       }
 
       const sttData = (await sttResponse.json()) as { transcript: string };
-      transcript = sttData.transcript || DEMO_TRANSCRIPT;
+      console.log("[STT Response]", JSON.stringify(sttData));
+      transcript = sttData.transcript;
+
+      if (!transcript || transcript.trim().length === 0) {
+        throw new Error("STT returned empty transcript — audio may be too short or silent");
+      }
     }
 
     console.log("[Transcript]", transcript);
 
     // STEP 2: LLM Extraction
-    let contractData = await extractFromTranscript(transcript);
+    const contractData = await extractFromTranscript(transcript);
+    console.log("[LLM Extracted]", JSON.stringify(contractData));
 
-    // STEP 3: Override names
+    // STEP 3: Override names from form fields (user-entered names take priority)
     if (contractorName && contractorName.trim()) {
       contractData.contractor_name = contractorName.trim();
     }
@@ -169,11 +176,15 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (err) {
-    console.error("[/api/extract Error]", err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[/api/extract Error]", message);
 
+    // Return error details so the client can show a real error message
+    // instead of silently displaying fallback data
     return NextResponse.json(
       {
-        success: true,
+        success: false,
+        error: message,
         data: fallbackContract,
       },
       { status: 200 }

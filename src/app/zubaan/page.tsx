@@ -850,6 +850,7 @@ export default function ZubaanPage() {
   const [demoMode, setDemoMode]           = useState(false);
   const [currentTime, setCurrentTime]     = useState("");
   const [loading, setLoading]             = useState(false);
+  const [apiError, setApiError]           = useState<string | null>(null);
   const [showDemoToast, setShowDemoToast] = useState<{ show: boolean; on: boolean }>({ show: false, on: false });
 
   const mediaRef    = useRef<MediaRecorder | null>(null);
@@ -922,6 +923,7 @@ export default function ZubaanPage() {
   // ── Call /api/extract ──────────────────────────────────────────────────
   const callExtract = useCallback(async (blob: Blob) => {
     setLoading(true);
+    setApiError(null);
     const fd = new FormData();
     fd.append("audio",             blob, "recording.webm");
     fd.append("contractor_name",   contractorName);
@@ -934,12 +936,21 @@ export default function ZubaanPage() {
         const errorText = await res.text();
         throw new Error(`Extract API failed ${res.status}: ${errorText}`);
       }
-      const json = (await res.json()) as { success: boolean; data: ContractData };
+      const json = (await res.json()) as { success: boolean; error?: string; data: ContractData };
+
+      // Surface API-level errors (STT or LLM failures) to the user
+      if (!json.success && json.error) {
+        console.error("[API Error]", json.error);
+        setApiError(json.error);
+      }
+
       setContract(json.data);
       setLoading(false);
       setStage("review");
     } catch (error) {
       console.error("[callExtract Error]", error);
+      const msg = error instanceof Error ? error.message : "Unknown error";
+      setApiError(msg);
       setContract({
         ...FALLBACK_CONTRACT,
         contractor_name: contractorName || FALLBACK_CONTRACT.contractor_name,
@@ -1134,6 +1145,30 @@ export default function ZubaanPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
           >
+            {/* ── API Error Banner ────────────────────────────────────────── */}
+            {apiError && (
+              <div
+                className="mx-4 mt-3 mb-1 rounded-2xl p-3 flex items-start gap-2"
+                style={{ background: "#FFF3E0", border: "1px solid #FFB74D" }}
+              >
+                <span style={{ fontSize: 16, flexShrink: 0 }}>⚠️</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#E65100", marginBottom: 2 }}>
+                    AI extraction failed — showing fallback data
+                  </div>
+                  <div style={{ fontSize: 10, color: "#BF360C", lineHeight: 1.5 }}>
+                    {apiError}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setApiError(null)}
+                  style={{ fontSize: 16, color: "#E65100", lineHeight: 1, flexShrink: 0 }}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
             <ReviewState
               data={contract}
               setData={setContract}
