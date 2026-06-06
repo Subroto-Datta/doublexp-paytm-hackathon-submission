@@ -39,6 +39,7 @@ html, body {
 
 /* Mobile-first app shell — viewport locked */
 .app-shell {
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
   height: 100dvh;
