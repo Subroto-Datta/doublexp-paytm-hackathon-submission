@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+
 
 function ChevronRight() {
   return (
@@ -29,7 +29,6 @@ const MENU_ITEMS = [
 ];
 
 export default function ProfileTab() {
-  const [kycPressed, setKycPressed] = useState(false);
 
   return (
     <div className="flex-1 overflow-y-auto main-scroll" style={{ background: "#F4F6FA" }}>

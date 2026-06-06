@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
     
     const body = (await req.json()) as PaymentRequest;
 
-    const { advance_amount, contractor_name, customer_name, service_description } = body;
+    const { advance_amount, contractor_name, customer_name } = body;
 
     // Validate required fields
     if (!advance_amount || !contractor_name || !customer_name) {
