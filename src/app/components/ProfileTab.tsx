@@ -1,6 +1,6 @@
 "use client";
 
-
+import React from "react";
 
 function ChevronRight() {
   return (
@@ -29,6 +29,7 @@ const MENU_ITEMS = [
 ];
 
 export default function ProfileTab() {
+
 
   return (
     <div className="flex-1 overflow-y-auto main-scroll" style={{ background: "#F4F6FA" }}>
@@ -64,7 +65,7 @@ export default function ProfileTab() {
 
       {/* Stats row — overlapping the hero */}
       <div className="mx-4 -mt-8 relative z-10 bg-white rounded-3xl px-4 py-4 mb-4" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.10)" }}>
-        <div className="grid grid-cols-3 divide-x" style={{ divideColor: "#F0F2F5" }}>
+        <div className="grid grid-cols-3 divide-x divide-gray-100">
           {[
             { label: "Transactions", value: "142", sub: "This month" },
             { label: "Cashback", value: "₹2,340", sub: "Earned" },

@@ -918,6 +918,7 @@ export default function ZubaanPage() {
       setStage("processing");
       callExtract(new Blob([], { type: "audio/webm" }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── Call /api/extract ──────────────────────────────────────────────────
