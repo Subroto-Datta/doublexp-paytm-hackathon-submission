@@ -1,39 +1,70 @@
-# 🎤 Paytm Zubaan
+# 🎤 Paytm Zubaan — Hackathon Submission
 
-> **Voice-Bound Business Contracts — Speak your deal. Lock the payment. Get proof — in your language.**
-
-Paytm Zubaan is a mobile-first feature built on top of a Paytm super-app UI that lets informal sector workers (contractors, plumbers, carpenters, etc.) create legally-traceable business contracts by simply **speaking** their deal terms — in Hindi, English, Telugu, Tamil, Punjabi, Bengali, and more.
+> **Paytm AI Hackathon 2026 | Team: doublexp | Subroto Datta**
 
 ---
 
-## ✨ Features
+## 📎 Submission Assets
 
-### 🏠 Home (Super-App Shell)
-- **Wallet Balance Card** — shows live balance with a show/hide toggle
-- **Quick Actions** — Mobile Recharge, Electricity Bill, Send Money, Bank Transfer, Movie & Train Tickets, Mutual Funds
-- **Banner Carousel** — promotional offers scroller
-- **Zubaan Hero Card** — entry point to the voice-contract feature
-- **Recommended Offers & Recent Transactions** — contextual feed content
-- **Bottom Navigation** — Home, Pay, History, Offers, Profile tabs
+| Asset | Link |
+|-------|------|
+| 📊 Pitch Deck | [Paytm_Zubaan_v2.pptx](https://drive.google.com/drive/folders/19g3macVP8kNCLPztpztzjT8V9mVr09TC) |
+| 📄 Solution Document | [Solution Doc](https://drive.google.com/drive/folders/19g3macVP8kNCLPztpztzjT8V9mVr09TC) |
+| 💻 Source Code | [This Repository](https://github.com/Subroto-Datta/doublexp-paytm-hackathon-submission) |
 
-### 🎤 Zubaan — Voice Contract Flow
+---
 
-A guided, stage-based flow with smooth Framer Motion animations:
+## 💡 The Problem
+
+India's informal workforce — plumbers, carpenters, electricians, repair technicians — operates on verbal agreements. There is no paper trail, no payment protection, no recourse when a job goes unpaid or a client disappears. **₹18 lakh crore** of informal economy transactions happen on trust alone.
+
+---
+
+## 🚀 The Solution — Paytm Zubaan
+
+> **"अपनी ज़ुबान दें"** — *Give your word. We'll make it binding.*
+
+**Zubaan** (meaning "word" / "voice" in Hindi) is a voice-first contract and payment feature built inside the Paytm app. It lets any worker formalize a deal in **60 seconds**, in **their own language**, without literacy or paperwork.
+
+### How it works
+
+```
+Speak your deal  →  AI extracts contract  →  Review & sign  →  Lock advance in escrow
+```
+
+1. **🎤 Record** — Worker speaks the deal terms naturally in Hindi, Telugu, Tamil, Punjabi, Bengali, or English
+2. **🧠 AI Extraction** — Sarvam AI (STT + LLM) transcribes speech and extracts structured contract fields
+3. **✏️ Review** — Both parties confirm all terms on screen; both must tap to confirm
+4. **🔒 Pay & Lock** — Advance is paid via UPI and held in **Commitment Vault** (escrow)
+5. **📄 Proof** — A downloadable PDF contract + WhatsApp-shareable receipt is generated
+
+---
+
+## ✨ Key Features
+
+### 🏠 Paytm Super-App Shell
+The app is presented as a complete Paytm home screen mockup with:
+- Wallet balance card (show/hide toggle)
+- Quick Actions grid (Recharge, Electricity, Send Money, Bank Transfer, Tickets, Mutual Funds)
+- Offers banner carousel
+- Bottom navigation (Home, Pay, History, Offers, Profile)
+
+### 🎤 Zubaan Voice Contract Flow
 
 | Stage | Description |
 |-------|-------------|
-| **Idle** | Enter contractor & customer names, tap the mic to begin |
+| **Idle** | Enter party names, tap the mic to begin |
 | **Recording** | Live timer + animated waveform; tap stop when done |
-| **Processing** | Audio sent to Sarvam AI STT → LLM extraction; animated skeleton loader |
-| **Review** | Editable contract fields; dual-confirm (contractor + customer must both tap) |
-| **Payment** | Commitment Vault UPI payment screen with advance amount |
+| **Processing** | Sarvam AI STT + LLM extraction with animated skeleton |
+| **Review** | Editable fields; **dual-confirm** (both parties tap) |
+| **Payment** | Advance secured via simulated UPI |
 | **Success** | Transaction receipt, PDF download, WhatsApp share |
 
 ### 🔒 Commitment Vault
-Advance payment is held in escrow and released only when **both parties** confirm job completion — protecting both the worker and the customer.
+Advance funds are held in escrow and released **only when both parties confirm** job completion.
 
-### 📄 PDF Export
-Download a formatted Zubaan Record PDF (`html2canvas` + `jsPDF`) with the full contract details and transaction proof.
+### 📄 PDF Contract
+A formatted, timestamped Zubaan Record PDF is downloadable and shareable as proof of agreement.
 
 ---
 
@@ -46,9 +77,14 @@ Download a formatted Zubaan Record PDF (`html2canvas` + `jsPDF`) with the full c
 | Styling | Tailwind CSS v3 + inline CSS-in-JS |
 | Animations | [Framer Motion](https://www.framer.com/motion/) |
 | PDF Generation | `html2canvas` + `jsPDF` |
-| Speech-to-Text | [Sarvam AI](https://www.sarvam.ai/) — `saaras:v2` model |
-| LLM Extraction | Sarvam AI — `sarvam-2b` model |
-| Languages Supported | Hindi, English, Telugu, Tamil, Punjabi, Bengali + more |
+| Speech-to-Text | [Sarvam AI](https://www.sarvam.ai/) — `saaras:v3` |
+| LLM Extraction | [Sarvam AI](https://www.sarvam.ai/) — `sarvam-30b` |
+
+---
+
+## 🌐 Supported Languages
+
+हिंदी · English · తెలుగు · தமிழ் · ਪੰਜਾਬੀ · বাংলা · and more via Sarvam AI
 
 ---
 
@@ -58,36 +94,25 @@ Download a formatted Zubaan Record PDF (`html2canvas` + `jsPDF`) with the full c
 paytm-zubaan/
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx                  # Home page (super-app shell)
+│   │   ├── page.tsx                  # Home page (Paytm super-app shell)
 │   │   ├── layout.tsx                # Root layout
-│   │   ├── globals.css               # Global styles & keyframe animations
+│   │   ├── globals.css               # Global styles & animations
 │   │   ├── zubaan/
-│   │   │   └── page.tsx              # Full Zubaan voice-contract flow
+│   │   │   └── page.tsx              # Full voice-contract flow (6 stages)
 │   │   ├── api/
 │   │   │   └── extract/
-│   │   │       └── route.ts          # POST /api/extract (STT + LLM)
+│   │   │       └── route.ts          # POST /api/extract (Sarvam STT + LLM)
 │   │   └── components/
 │   │       ├── ZubaanCard.tsx        # Hero entry card on home feed
 │   │       ├── QuickActions.tsx      # 8-icon quick action grid
 │   │       ├── BannerCarousel.tsx    # Offers banner scroller
 │   │       ├── BottomNav.tsx         # Tab bar navigation
-│   │       ├── TopHeader.tsx         # App header with notifications/search
-│   │       ├── GreetingStrip.tsx     # Personalised greeting
-│   │       ├── RecentTransactions.tsx
-│   │       ├── RecommendedOffers.tsx
-│   │       ├── ZubaanRecordPDF.tsx   # Hidden DOM node rendered to PDF
-│   │       ├── ProgressBar.tsx       # Animated progress indicator
-│   │       ├── ErrorBoundary.tsx     # React error boundary wrapper
-│   │       ├── PayTab.tsx            # Pay tab content
-│   │       ├── HistoryTab.tsx        # Transaction history tab
-│   │       ├── OffersTab.tsx         # Offers tab
-│   │       ├── ProfileTab.tsx        # Profile tab
-│   │       └── StubScreen.tsx        # Placeholder screens
+│   │       ├── TopHeader.tsx         # App header
+│   │       ├── ZubaanRecordPDF.tsx   # Hidden DOM rendered to PDF
+│   │       └── ...                   # Other tab and UI components
 │   └── lib/
-│       └── generatePDF.ts            # PDF generation utility
-├── .env.local                        # Environment variables (not committed)
-├── next.config.mjs
-├── tailwind.config.ts
+│       └── generatePDF.ts            # PDF export utility
+├── .env.local                        # API keys (not committed)
 └── package.json
 ```
 
@@ -102,29 +127,29 @@ paytm-zubaan/
 ### 1. Clone & Install
 
 ```bash
-git clone <repo-url>
-cd paytm-zubaan
+git clone https://github.com/Subroto-Datta/doublexp-paytm-hackathon-submission.git
+cd doublexp-paytm-hackathon-submission
 npm install
 ```
 
-### 2. Configure Environment Variables
+### 2. Configure Environment
 
-Create a `.env.local` file in the project root:
-
-```env
+```bash
+# Create .env.local
 SARVAM_API_KEY=your_sarvam_api_key_here
 
-# Optional: set to "true" to bypass the real STT/LLM and use hardcoded demo data
+# Optional: use hardcoded demo data instead of real STT/LLM
 DEMO_MODE=false
 ```
 
-### 3. Run the Development Server
+### 3. Run
 
 ```bash
 npm run dev
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+> **Demo mode:** Tap the Paytm logo 5 times on the Zubaan screen to toggle demo mode (bypasses real STT/LLM for quick testing).
 
 ---
 
@@ -132,93 +157,39 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### `POST /api/extract`
 
-Processes a voice recording and returns structured contract data.
-
-**Query Parameters**
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `demo` | `boolean` | If `true`, skips real STT/LLM and returns hardcoded demo contract |
-
-**Form Data**
-
 | Field | Type | Description |
 |-------|------|-------------|
-| `audio` | `File` (webm/mp4) | The recorded audio blob |
-| `contractor_name` | `string` | Pre-filled contractor name (overrides LLM extraction) |
-| `customer_name` | `string` | Pre-filled customer name (overrides LLM extraction) |
+| `audio` | `File` (webm) | Recorded audio blob |
+| `contractor_name` | `string` | Worker's name |
+| `customer_name` | `string` | Customer's name |
 
-**Response**
+**Query:** `?demo=true` — use hardcoded transcript instead of real STT
 
+**Response:**
 ```json
 {
   "success": true,
   "data": {
-    "service_description": "Fridge repair service",
+    "service_description": "AC repair",
     "contractor_name": "Ramesh Kumar",
     "customer_name": "Suresh Sharma",
-    "advance_amount": 500,
-    "total_amount": 2000,
-    "completion_date": "2026-06-07",
-    "special_conditions": "Work to be completed within 24 hours"
+    "advance_amount": 1000,
+    "total_amount": 3000,
+    "completion_date": "2026-06-08",
+    "special_conditions": "Work within 2 days"
   }
 }
 ```
 
-> **Fallback behaviour:** If STT or LLM extraction fails for any reason, the API returns a graceful fallback contract (HTTP 200) so the user flow is never broken.
+---
+
+## 👤 About
+
+**Subroto Datta** — Team doublexp  
+Submission for the **Paytm AI Hackathon 2026**
+
+📂 [All Submission Assets](https://drive.google.com/drive/folders/19g3macVP8kNCLPztpztzjT8V9mVr09TC)
 
 ---
 
-## 🧩 Key Components
-
-### `ZubaanCard`
-The home-screen entry card. Displays key stats (contract range, time-to-contract, supported languages) and navigates to `/zubaan` on tap.
-
-### `QuickActions`
-An 8-icon 4-column grid (Mobile Recharge, Electricity, Send Money, Bank Transfer, Movie Tickets, Train Tickets, Mutual Funds, See All) with press-scale micro-animations.
-
-### `ZubaanRecordPDF`
-A hidden, off-screen React component that represents the final contract document. `html2canvas` captures it as a canvas, then `jsPDF` exports it as a downloadable PDF.
-
-### `/zubaan/page.tsx`
-The core voice-contract flow. Manages the `Stage` state machine (`idle → recording → processing → review → payment → success`) with Framer Motion `AnimatePresence` transitions between stages.
-
----
-
-## 🌐 Supported Languages
-
-| Language | Script |
-|----------|--------|
-| Hindi | हिंदी |
-| English | English |
-| Telugu | తెలుగు |
-| Tamil | தமிழ் |
-| Punjabi | ਪੰਜਾਬੀ |
-| Bengali | বাংলা |
-| + more via Sarvam AI | — |
-
----
-
-## 📜 Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build production bundle |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-
----
-
-## 🔐 Security & Trust
-
-- Payments are protected by **Commitment Vault** escrow
-- Dual-confirmation required from both contractor and customer
-- PDF contract serves as a tamper-evident, timestamped record
-- Built on Paytm's RBI-regulated, NPCI-member infrastructure
-
----
-
-## 📄 License
-
-Private — © Paytm. All rights reserved.
+*Built with ❤️ for India's informal workforce*
