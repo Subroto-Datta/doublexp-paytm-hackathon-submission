@@ -48,7 +48,7 @@ export default function TopHeader({ onTabChange }: { onTabChange?: (tab: string)
 
   return (
     <header
-      className="flex-shrink-0 flex items-center gap-3 px-4 bg-white"
+      className="flex-shrink-0 flex items-center gap-1.5 sm:gap-3 px-2 sm:px-4 bg-white"
       style={{
         height: 56,
         borderBottom: "1px solid #F0F2F5",
@@ -88,7 +88,10 @@ export default function TopHeader({ onTabChange }: { onTabChange?: (tab: string)
           onFocus={() => setSearchFocused(true)}
           onBlur={() => setSearchFocused(false)}
         />
-        <div className="flex-shrink-0">
+        <div 
+          className="flex-shrink-0 cursor-pointer active:scale-90 transition-transform p-1"
+          onClick={() => { if (onTabChange) onTabChange("pay"); }}
+        >
           <ScanIcon />
         </div>
       </div>
