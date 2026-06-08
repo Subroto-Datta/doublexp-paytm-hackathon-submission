@@ -61,12 +61,11 @@ export default function TopHeader({ onTabChange }: { onTabChange?: (tab: string)
         className="flex-shrink-0 flex items-center cursor-pointer active:scale-95 transition-transform"
         onClick={() => { if (onTabChange) onTabChange("home"); }}
       >
-        <span
-          className="font-black select-none"
-          style={{ fontSize: 22, color: "#002970", letterSpacing: "-0.5px", fontFamily: "Inter, sans-serif" }}
-        >
-          pay<span style={{ color: "#00BAF2" }}>T</span>m
-        </span>
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" 
+          alt="Paytm Logo" 
+          style={{ height: 22, objectFit: "contain" }}
+        />
       </div>
 
       {/* Search bar */}
