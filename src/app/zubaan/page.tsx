@@ -354,7 +354,7 @@ function PaymentState({
       {/* Progress bar */}
       {loading && (
         <div
-          className="fixed top-0 left-0 h-1"
+          className="absolute top-0 left-0 h-1"
           style={{
             width: `${progress}%`,
             background: "linear-gradient(90deg, #00BAF2, #0096D6)",
@@ -445,16 +445,13 @@ function PaymentState({
       <button
         onClick={onPay}
         disabled={loading}
-        className="fixed bottom-0 left-0 right-0 mx-4 rounded-full font-bold text-base text-white"
+        className="absolute bottom-0 left-0 right-0 mx-4 rounded-full font-bold text-base text-white"
         style={{
           height: 56,
           background: loading ? "#7BB3DA" : "#00BAF2",
           border: "none",
           cursor: loading ? "not-allowed" : "pointer",
           opacity: loading ? 0.7 : 1,
-          maxWidth: 468,
-          left: "50%",
-          transform: "translateX(-50%)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -1010,7 +1007,7 @@ export default function ZubaanPage() {
         {/* ── Fake status bar ──────────────────────────────────────────────── */}
         <div
           style={{
-            position: "fixed",
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,

@@ -73,7 +73,7 @@ const ACTIONS = [
   { id: "all", label: "See\nAll", Icon: Icons.Grid, bg: "#F0F2F5", color: "#6B7280" },
 ];
 
-export default function QuickActions() {
+export default function QuickActions({ onTabChange }: { onTabChange?: (tab: string) => void }) {
   const [pressed, setPressed] = useState<string | null>(null);
 
   return (
@@ -85,8 +85,9 @@ export default function QuickActions() {
             id={`qa-${action.id}`}
             className="quick-action-btn flex flex-col items-center gap-1.5"
             onPointerDown={() => setPressed(action.id)}
-            onPointerUp={() => setPressed(null)}
+            onPointerUp={() => { setPressed(null); if (onTabChange) onTabChange("pay"); }}
             onPointerLeave={() => setPressed(null)}
+            onClick={() => { if (onTabChange) onTabChange("pay"); }}
             style={{ transform: pressed === action.id ? "scale(0.92)" : "scale(1)" }}
           >
             <div

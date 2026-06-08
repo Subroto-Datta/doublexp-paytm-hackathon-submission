@@ -34,19 +34,17 @@ html, body {
   color: var(--paytm-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 }
 
 /* Mobile-first app shell — viewport locked */
 .app-shell {
   width: 100%;
-  max-width: 480px;
+  max-width: 100%;
   margin: 0 auto;
   height: 100dvh;
   height: 100vh; /* fallback */
   background: var(--paytm-white);
   position: relative;
-  box-shadow: 0 0 40px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -55,6 +53,10 @@ html, body {
 @media (min-width: 768px) {
   body {
     background: #E8ECF4;
+  }
+  .app-shell {
+    max-width: 480px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.12);
   }
 }
 

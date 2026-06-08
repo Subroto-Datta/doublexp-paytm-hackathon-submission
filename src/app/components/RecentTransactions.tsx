@@ -47,14 +47,18 @@ const TRANSACTIONS = [
   },
 ];
 
-export default function RecentTransactions() {
+export default function RecentTransactions({ onTabChange }: { onTabChange?: (tab: string) => void }) {
   return (
     <div className="mb-5">
       <div className="px-4 mb-3 flex items-center justify-between">
         <h2 className="font-bold text-sm" style={{ color: "#1A1A2E" }}>
           Recent Transactions
         </h2>
-        <button className="text-xs font-semibold" style={{ color: "#00BAF2" }}>
+        <button 
+          onClick={() => { if (onTabChange) onTabChange("history"); }}
+          className="text-xs font-semibold active:scale-95 transition-transform" 
+          style={{ color: "#00BAF2" }}
+        >
           View All
         </button>
       </div>

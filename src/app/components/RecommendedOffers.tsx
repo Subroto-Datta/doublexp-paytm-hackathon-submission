@@ -35,14 +35,18 @@ const OFFERS = [
   },
 ];
 
-export default function RecommendedOffers() {
+export default function RecommendedOffers({ onTabChange }: { onTabChange?: (tab: string) => void }) {
   return (
     <div className="mb-5">
       <div className="px-4 mb-3 flex items-center justify-between">
         <h2 className="font-bold text-sm" style={{ color: "#1A1A2E" }}>
           Recommended For You
         </h2>
-        <button className="text-xs font-semibold" style={{ color: "#00BAF2" }}>
+        <button 
+          onClick={() => { if (onTabChange) onTabChange("offers"); }}
+          className="text-xs font-semibold active:scale-95 transition-transform" 
+          style={{ color: "#00BAF2" }}
+        >
           View All
         </button>
       </div>
@@ -51,7 +55,8 @@ export default function RecommendedOffers() {
         {OFFERS.map((offer) => (
           <div
             key={offer.id}
-            className="offer-card flex-shrink-0 rounded-2xl overflow-hidden"
+            onClick={() => { if (onTabChange) onTabChange("offers"); }}
+            className="offer-card flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer"
             style={{ width: 152, background: offer.bg, boxShadow: "0 2px 12px rgba(0,0,0,0.10)" }}
           >
             <div className="p-3.5">

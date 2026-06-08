@@ -15,7 +15,7 @@ import OffersTab from "./components/OffersTab";
 import ProfileTab from "./components/ProfileTab";
 
 // ── Balance Card ────────────────────────────────────────────────────────────
-function BalanceCard() {
+function BalanceCard({ onTabChange }: { onTabChange: (tab: string) => void }) {
   const [visible, setVisible] = useState(true);
   return (
     <div
@@ -65,12 +65,13 @@ function BalanceCard() {
             style={{ borderTop: "1px solid rgba(255,255,255,0.2)" }}
           >
             {[
-              { label: "Add Money", icon: "+" },
-              { label: "Send", icon: "↑" },
-              { label: "Request", icon: "↓" },
+              { label: "Add Money", icon: "+", action: "pay" },
+              { label: "Send", icon: "↑", action: "pay" },
+              { label: "Request", icon: "↓", action: "pay" },
             ].map((a) => (
               <button
                 key={a.label}
+                onClick={() => onTabChange(a.action)}
                 className="flex flex-col items-center gap-1 py-2 rounded-2xl active:scale-95 transition-transform"
                 style={{ background: "rgba(255,255,255,0.15)" }}
               >
@@ -98,16 +99,16 @@ function SectionLabel({ text }: { text: string }) {
 }
 
 // ── Home feed ────────────────────────────────────────────────────────────────
-function HomeFeed() {
+function HomeFeed({ onTabChange }: { onTabChange: (tab: string) => void }) {
   return (
     <div className="pt-3 pb-6">
       <GreetingStrip />
-      <BalanceCard />
+      <BalanceCard onTabChange={onTabChange} />
 
       {/* Quick Actions card */}
       <div className="bg-white rounded-3xl mx-4 mb-4 pt-4 pb-2" style={{ boxShadow: "0 1px 10px rgba(0,0,0,0.06)" }}>
         <SectionLabel text="Quick Actions" />
-        <QuickActions />
+        <QuickActions onTabChange={onTabChange} />
       </div>
 
       {/* Banners */}
@@ -117,7 +118,7 @@ function HomeFeed() {
             ✨ Offers &amp; Promotions
           </span>
         </div>
-        <BannerCarousel />
+        <BannerCarousel onTabChange={onTabChange} />
       </div>
 
       {/* Zubaan */}
@@ -125,12 +126,12 @@ function HomeFeed() {
 
       {/* Recommended */}
       <div className="bg-white rounded-3xl mx-4 mb-4 pt-4 pb-3" style={{ boxShadow: "0 1px 10px rgba(0,0,0,0.06)" }}>
-        <RecommendedOffers />
+        <RecommendedOffers onTabChange={onTabChange} />
       </div>
 
       {/* Transactions */}
       <div className="bg-white rounded-3xl mx-4 mb-4 pt-4 pb-3" style={{ boxShadow: "0 1px 10px rgba(0,0,0,0.06)" }}>
-        <RecentTransactions />
+        <RecentTransactions onTabChange={onTabChange} />
       </div>
 
       <p className="text-center text-[10px] pb-2" style={{ color: "#D1D5DB" }}>
@@ -152,7 +153,7 @@ export default function Home() {
 
   const renderContent = () => {
     switch (activeTab) {
-      case "home":     return <div key="home" className="flex-1 overflow-y-auto main-scroll slide-up" style={{ background: "#F4F6FA" }}><HomeFeed /></div>;
+      case "home":     return <div key="home" className="flex-1 overflow-y-auto main-scroll slide-up" style={{ background: "#F4F6FA" }}><HomeFeed onTabChange={handleTabChange} /></div>;
       case "pay":      return <div key="pay" className="flex-1 flex flex-col slide-up" style={{ overflow: "hidden" }}><PayTab /></div>;
       case "history":  return <div key="history" className="flex-1 flex flex-col slide-up" style={{ overflow: "hidden" }}><HistoryTab /></div>;
       case "offers":   return <div key="offers" className="flex-1 flex flex-col slide-up" style={{ overflow: "hidden" }}><OffersTab /></div>;
@@ -163,7 +164,7 @@ export default function Home() {
 
   return (
     <div className="app-shell">
-      <TopHeader />
+      <TopHeader onTabChange={handleTabChange} />
       {renderContent()}
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
     </div>

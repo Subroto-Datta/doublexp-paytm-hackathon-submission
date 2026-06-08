@@ -29,7 +29,7 @@ const BANNERS = [
   },
 ];
 
-export default function BannerCarousel() {
+export default function BannerCarousel({ onTabChange }: { onTabChange?: (tab: string) => void }) {
   const [current, setCurrent] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
@@ -99,7 +99,11 @@ export default function BannerCarousel() {
                 </span>
                 <div className="text-white font-bold text-base leading-tight">{b.title}</div>
                 <div className="text-white/80 text-xs mt-1">{b.subtitle}</div>
-                <button className="mt-3 bg-white text-xs font-semibold px-3 py-1 rounded-full" style={{ color: "#764ba2" }}>
+                <button 
+                  onClick={() => { if (onTabChange) onTabChange("offers"); }}
+                  className="mt-3 bg-white text-xs font-semibold px-3 py-1 rounded-full active:scale-95 transition-transform" 
+                  style={{ color: "#764ba2" }}
+                >
                   Grab Now →
                 </button>
               </div>
