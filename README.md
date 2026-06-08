@@ -8,7 +8,6 @@
 
 | Asset | Link |
 |-------|------|
-| 🌐 Live Demo | [Paytm Zubaan App](https://doublexp-paytm-hackathon-submission-two.vercel.app) |
 | 📊 Pitch Deck | [Paytm_Zubaan_v2.pptx](https://drive.google.com/drive/folders/19g3macVP8kNCLPztpztzjT8V9mVr09TC) |
 | 📄 Solution Document | [Solution Doc](https://drive.google.com/drive/folders/19g3macVP8kNCLPztpztzjT8V9mVr09TC) |
 | 💻 Source Code | [This Repository](https://github.com/Subroto-Datta/doublexp-paytm-hackathon-submission) |
